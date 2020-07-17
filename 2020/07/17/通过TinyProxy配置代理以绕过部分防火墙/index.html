@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>通过TinyProxy配置代理以绕过部分防火墙 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前段时间公司新设置了防火墙过滤规则，使得诸如优酷、bilibili等视频网站不能正常使用了，万幸他并没有对油管这类外网网站进行过滤，当时也就没在意。直到今天，我发现他居然把网易云等软件也废了…不过无妨，我又想起了之前租来的腾讯云服务器。于是乎，代理走起！ 首先，下载TinyProxy:yum -y install tinyproxy对&#x2F;etc&#x2F;tinyproxy&#x2F;tinyproxy.conf进行配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过TinyProxy配置代理以绕过部分防火墙">
+<meta property="og:url" content="http://yoursite.com/2020/07/17/%E9%80%9A%E8%BF%87TinyProxy%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E4%BB%A5%E7%BB%95%E8%BF%87%E9%83%A8%E5%88%86%E9%98%B2%E7%81%AB%E5%A2%99/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前段时间公司新设置了防火墙过滤规则，使得诸如优酷、bilibili等视频网站不能正常使用了，万幸他并没有对油管这类外网网站进行过滤，当时也就没在意。直到今天，我发现他居然把网易云等软件也废了…不过无妨，我又想起了之前租来的腾讯云服务器。于是乎，代理走起！ 首先，下载TinyProxy:yum -y install tinyproxy对&#x2F;etc&#x2F;tinyproxy&#x2F;tinyproxy.conf进行配">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-17T06:06:48.000Z">
+<meta property="article:modified_time" content="2020-07-17T06:28:58.093Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="-Linux -云主机">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-通过TinyProxy配置代理以绕过部分防火墙" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/17/%E9%80%9A%E8%BF%87TinyProxy%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E4%BB%A5%E7%BB%95%E8%BF%87%E9%83%A8%E5%88%86%E9%98%B2%E7%81%AB%E5%A2%99/" class="article-date">
+  <time datetime="2020-07-17T06:06:48.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      通过TinyProxy配置代理以绕过部分防火墙
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间公司新设置了防火墙过滤规则，使得诸如优酷、bilibili等视频网站不能正常使用了，<br>万幸他并没有对油管这类外网网站进行过滤，当时也就没在意。<br>直到今天，我发现他居然把网易云等软件也废了…不过无妨，我又想起了之前租来的腾讯云服务器。<br>于是乎，代理走起！</p>
+<p><br/>首先，下载TinyProxy:<br><br/><code>yum -y install tinyproxy</code><br><br/>对<code>/etc/tinyproxy/tinyproxy.conf</code>进行配置，默认端口为8888，可根据自己喜好更改。<br>修改方式也简单，找到”Port”字样修改后面的数字即可。<br>其次修改允许代理连接的ip地址，把Allow后面的跟着ip地址改为你指定的ip地址，因为配置文件中<code>Allow 127.0.0.1</code>是默认只允许本地的。<br>假如你想允许多个指定的ip地址进行代理，可以在后面添加多个Allow规则。<br>如果图方便注释掉这一行即可，不过这样一来就默认允许所有连接进行代理了，这点见仁见智。<br><br/>修改完成之后别忘了去修改云主机的防火墙规则：<br><br/><code>firewall-cmd --zone=public --add-port=80/tcp --permanent</code><br><br/>重启防火墙：<br><br/><code>firewall-cmd --reload</code><br><br/>开启tinyproxy服务：<br><br/><code>service tinyproxy start</code><br><br/>开启服务之后对其进行测试,<br><br/>先查看服务及监听端口,看是否有tinyproxy程序端口和服务：<br><br/><code>netstat -ntlp</code><br><br/>其次使用postman进行proxy代理配置和接口访问测试：<br><br/>打开postman-&gt;flie-&gt;settings-&gt;proxy,填上你代理服务器的ip地址和端口号，接着就可以进行测试了。<br><br/>测试无误之后要进行使用也不难，网络和internet设置里有代理这个选项，找到他并打开手动代理，<br>填上代理服务器的地址和端口号，点击保存即可。<br><br/>打开代理之后就可以绕过公司防火墙正常使用应用了，虽然响应速度偶尔不尽如人意，但是能用就行，能用就行…</p>
+<p><br/>具体的一些tinyproxy的参数和原理可以参考下面的链接<br><br/><a href="https://www.jianshu.com/p/8af3b220324f" target="_blank" rel="noopener">参考链接:突破公司的防火墙对视频网站的限制</a><br><br/><a href="https://cloud.tencent.com/developer/article/1475747" target="_blank" rel="noopener">参考链接:推荐一款轻量级 HTTP/HTTPS 代理 TinyProxy</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/17/%E9%80%9A%E8%BF%87TinyProxy%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E4%BB%A5%E7%BB%95%E8%BF%87%E9%83%A8%E5%88%86%E9%98%B2%E7%81%AB%E5%A2%99/" data-id="ckcpudgff0000rhvw648thyuf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux-%E4%BA%91%E4%B8%BB%E6%9C%BA/" rel="tag">-Linux -云主机</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/15/How-2-start-a-blog-with-Hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">How 2 start a blog with Hexo</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-%E4%BA%91%E4%B8%BB%E6%9C%BA/" rel="tag">-Linux -云主机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Linux-%E4%BA%91%E4%B8%BB%E6%9C%BA/" style="font-size: 10px;">-Linux -云主机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/17/%E9%80%9A%E8%BF%87TinyProxy%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E4%BB%A5%E7%BB%95%E8%BF%87%E9%83%A8%E5%88%86%E9%98%B2%E7%81%AB%E5%A2%99/">通过TinyProxy配置代理以绕过部分防火墙</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/15/How-2-start-a-blog-with-Hexo/">How 2 start a blog with Hexo</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/14/My-new-post/">My new post</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/14/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
