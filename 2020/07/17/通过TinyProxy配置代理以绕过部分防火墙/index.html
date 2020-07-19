@@ -15,7 +15,7 @@
 <meta property="og:description" content="前段时间公司新设置了防火墙过滤规则，使得诸如优酷、bilibili等视频网站不能正常使用了，万幸他并没有对油管这类外网网站进行过滤，当时也就没在意。直到今天，我发现他居然把网易云等软件也废了…不过无妨，我又想起了之前租来的腾讯云服务器。于是乎，代理走起！ 首先，下载TinyProxy:yum -y install tinyproxy对&#x2F;etc&#x2F;tinyproxy&#x2F;tinyproxy.conf进行配">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-17T06:06:48.000Z">
-<meta property="article:modified_time" content="2020-07-17T06:35:59.200Z">
+<meta property="article:modified_time" content="2020-07-19T07:44:42.687Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="-Linux -云主机">
 <meta name="twitter:card" content="summary">
@@ -89,7 +89,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前段时间公司新设置了防火墙过滤规则，使得诸如优酷、bilibili等视频网站不能正常使用了，<br>万幸他并没有对油管这类外网网站进行过滤，当时也就没在意。<br>直到今天，我发现他居然把网易云等软件也废了…不过无妨，我又想起了之前租来的腾讯云服务器。<br>于是乎，代理走起！</p>
+        <p>前段时间公司新设置了防火墙过滤规则，使得诸如优酷、bilibili等视频网站不能正常使用了，万幸他并没有对油管这类外网网站进行过滤，当时也就没在意。直到今天，我发现他居然把网易云等软件也废了…不过无妨，我又想起了之前租来的腾讯云服务器。<br>于是乎，代理走起！</p>
 <p><br/>首先，下载TinyProxy:<br><br/><code>yum -y install tinyproxy</code><br><br/>对<code>/etc/tinyproxy/tinyproxy.conf</code>进行配置，默认端口为8888，可根据自己喜好更改。<br>修改方式也简单，找到”Port”字样修改后面的数字即可。<br>其次修改允许代理连接的ip地址，把Allow后面的跟着ip地址改为你指定的ip地址，因为配置文件中<code>Allow 127.0.0.1</code>是默认只允许本地的。<br>假如你想允许多个指定的ip地址进行代理，可以在后面添加多个Allow规则。<br>如果图方便注释掉这一行即可，不过这样一来就默认允许所有连接进行代理了，这点见仁见智。<br><br/>修改完成之后别忘了去修改云主机的防火墙规则：<br><br/><code>firewall-cmd --zone=public --add-port=80/tcp --permanent</code><br><br/>重启防火墙：<br><br/><code>firewall-cmd --reload</code><br><br/>开启tinyproxy服务：<br><br/><code>service tinyproxy start</code><br><br/>开启服务之后对其进行测试,<br><br/>先查看服务及监听端口,看是否有tinyproxy程序端口和服务：<br><br/><code>netstat -ntlp</code><br><br/>其次使用postman进行proxy代理配置和接口访问测试：<br><br/>打开postman-&gt;flie-&gt;settings-&gt;proxy,填上你代理服务器的ip地址和端口号，接着就可以进行测试了。<br><br/>测试无误之后要进行使用也不难，网络和internet设置里有代理这个选项，找到他并打开手动代理，<br>填上代理服务器的地址和端口号，点击保存即可。<br><br/>打开代理之后就可以绕过公司防火墙正常使用应用了，虽然响应速度偶尔不尽如人意，但是能用就行，能用就行…</p>
 <p><br/>具体的一些tinyproxy的参数和原理可以参考下面的链接<br><br/><a href="https://www.jianshu.com/p/8af3b220324f" target="_blank" rel="noopener">参考链接:突破公司的防火墙对视频网站的限制</a><br><br/><a href="https://cloud.tencent.com/developer/article/1475747" target="_blank" rel="noopener">参考链接:推荐一款轻量级 HTTP/HTTPS 代理 TinyProxy</a></p>
 
