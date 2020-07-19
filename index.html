@@ -132,70 +132,43 @@
 </center>
 
 <blockquote>
-<p>1.准备工作：<br><font face = "宋体" size = 4><br>1、git<br>2、Nodejs<br>3、hexo   </p>
+<p>1.准备工作：<br><br/>1、git<br><br/>2、Nodejs<br><br/>3、hexo</p>
 </blockquote>
 <blockquote>
-<p>2.部署git</p>
+<p>2.部署git<br><br/><code>yum intall -y git</code></p>
 </blockquote>
 <blockquote>
-<p><code>yum intall -y git</code>   </p>
-</blockquote>
-<blockquote>
-<p>可以使用git –version查看版本并确认安装是否成功<br>配置账号：   </p>
-</blockquote>
-<blockquote>
-<p><code>git config --global user.name &quot;git用户名&quot;</code><br><code>git config --global user.email &quot;git邮箱&quot;</code><br><code>ssh-keygen -t rsa -C &quot;git邮箱&quot;</code>   </p>
+<p>可以使用git –version查看版本并确认安装是否成功<br>配置账号：<br><br/><code>git config --global user.name &quot;git用户名&quot;</code><br><br/><code>git config --global user.email &quot;git邮箱&quot;</code><br><br/><code>ssh-keygen -t rsa -C &quot;git邮箱&quot;</code></p>
 </blockquote>
 <blockquote>
 <p>生成公钥的目录可在提示信息中查看<br>配置完成后可从GitHub的个人设置中设置SSH密钥，将id_rsa.pub文件中所有的内容复制到对应地方即可</p>
 </blockquote>
 <blockquote>
-<p>3.配置nodejs<br><font face = "宋体" size = 4></p>
+<p>3.配置nodejs<br><br/><code>wget https://npm.taobao.org/mirrors/node/v11.0.0/node-v11.0.0.tar.gz</code></p>
 </blockquote>
 <blockquote>
-<p><code>wget https://npm.taobao.org/mirrors/node/v11.0.0/node-v11.0.0.tar.gz</code></p>
+<p>解压安装包<br><br/><code>tar -xzvf node-v11.0.0.tar.gz</code></p>
 </blockquote>
 <blockquote>
-<p>解压安装包</p>
+<p>进入目录并安装相关插件<br><br/><code>cd node-v11.0.0</code><br><br/><code>sudo yum install gcc gcc-c++</code></p>
 </blockquote>
 <blockquote>
-<p><code>tar -xvf node-v11.0.0.tar.gz</code>   </p>
+<p>进行默认配置并编译<br><br/><code>./configure</code><br><br/><code>make</code></p>
 </blockquote>
 <blockquote>
-<p>进入目录并安装相关插件   </p>
+<p>编译完之后就可以开始安装<br><br/><code>sudo make install</code><br><br/>之后验证安装<br><br/><code>node -v</code></p>
 </blockquote>
 <blockquote>
-<p><code>cd node-v11.0.0</code><br><code>sudo yum install gcc gcc-c++</code>   </p>
-</blockquote>
-<blockquote>
-<p>进行默认配置并编译   </p>
-</blockquote>
-<blockquote>
-<p><code>./configure</code><br><code>make</code>   </p>
-</blockquote>
-<blockquote>
-<p>编译完之后就可以开始安装   </p>
-</blockquote>
-<blockquote>
-<p><code>sudo make install</code>   </p>
-</blockquote>
-<blockquote>
-<p>之后验证安装   </p>
-</blockquote>
-<blockquote>
-<p><code>node -v</code>   </p>
-</blockquote>
-<blockquote>
-<p>检测安装是否完成<br><a href="https://www.cnblogs.com/Logan626/p/11191894.html" target="_blank" rel="noopener">参考文献</a></p>
+<p>检测安装是否完成:<a href="https://www.cnblogs.com/Logan626/p/11191894.html" target="_blank" rel="noopener">参考文献</a></p>
 </blockquote>
 <blockquote>
 <p>4.部署hexo</p>
 </blockquote>
 <blockquote>
-<p><code>npm install -g hexo-cli</code>   </p>
+<p><code>npm install -g hexo-cli</code></p>
 </blockquote>
 <blockquote>
-<p>安装完成后依旧可以通过hexo -v查看版本<br>通过mkdir在你喜欢的位置建立文件夹，例如:/usr/local/blog<br>进入blog文件夹，初始化hexo</p>
+<p>安装完成后依旧可以通过hexo -v查看版本<br><br/>通过mkdir在你喜欢的位置建立文件夹，例如:/usr/local/blog<br><br/>进入blog文件夹，初始化hexo</p>
 </blockquote>
 <blockquote>
 <p><code>hexo init</code>    （若权限不够，使用sudo即可）</p>
@@ -204,28 +177,25 @@
 <p>当提示Start blogging with Hexo!则表示初始化完成</p>
 </blockquote>
 <blockquote>
-<p>启动博客：hexo s<br>访问localhost:4000，博客默认在localhost的4000端口启动，一般做预览<br>新建一篇文章</p>
+<p>启动博客：hexo s<br><br/>访问localhost:4000，博客默认在localhost的4000端口启动，一般做预览</p>
 </blockquote>
 <blockquote>
-<p><code>hexo n &quot;xxxxxx&quot;</code></p>
-</blockquote>
-<blockquote>
-<p>博客具体内容在markdown文档内进行修改即可</p>
+<p>新建一篇文章<br><br/><code>hexo n &quot;xxxxxx&quot;</code><br><br/>博客具体内容在markdown文档内进行修改即可</p>
 </blockquote>
 <blockquote>
 <p>退回blog目录后</p>
 </blockquote>
 <blockquote>
-<p><code>hexo clean</code><br><code>hexo g</code><br><code>hexo s</code></p>
+<p><code>hexo clean</code><br><br/><code>hexo g</code><br><br/><code>hexo s</code></p>
 </blockquote>
 <blockquote>
 <p>刷新下localhost：4000页面，可见之前写的静态文章已经发布上去了</p>
 </blockquote>
 <blockquote>
-<p>5.在GitHub上发布内容<br><a href="https://www.youtube.com/watch?v=erKYtw4Rfhk&t=1151s" target="_blank" rel="noopener">参考链接</a><br></font></p>
+<p>5.在GitHub上发布内容：<br><a href="https://www.youtube.com/watch?v=erKYtw4Rfhk&t=1151s" target="_blank" rel="noopener">参考链接</a><br></font></p>
 </blockquote>
 <blockquote>
-<p>6.更新内容<br><code>hexo g</code><br><code>hexo d</code><br>输入你的github账号密码稍等即可</p>
+<p>6.更新内容<br><br/><code>hexo g</code><br><br/><code>hexo d</code><br><br/>输入你的github账号密码稍等即可</p>
 </blockquote>
 
       
